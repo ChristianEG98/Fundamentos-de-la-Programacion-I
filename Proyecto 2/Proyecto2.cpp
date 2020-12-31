@@ -67,9 +67,9 @@ int main() {
     if (Debug) {
         cargar(jugadores, jugTurnado, calle1, calle2);
     }
+    setColor(tColor(jugTurnado));
     mostrar(jugadores, calle1, calle2);
     pausa();
-    setColor(tColor(jugTurnado));
 
     while (!finJuego) {
         setColor(jugTurnado);
@@ -705,13 +705,14 @@ bool jugar(tJugadores jugadores, tColor jugTurnado, int& premio, bool& finJuego,
     }
     //si puede mover una
     else if (fichasPuedeMover == 1) {
-        int casilla = jugadores[jugTurnado][puedeUnaFicha] + tirada;
+        int casilla = jugadores[jugTurnado][puedeUnaFicha];
+        puedeMover(jugadores, jugTurnado, puedeUnaFicha, casilla, tirada, calle1, calle2);
         mover(jugadores, jugTurnado, puedeUnaFicha, casilla, premio, ultimaFichaMovida, calle1, calle2);
         cout << "Solo puede moverse la ficha " << puedeUnaFicha + 1 << endl;
         cout << "Premio: " << premio << endl;
         if (premio > 0)
             debePasar = false;
-        if (tirada >= 6)
+        if (tirada == 6 | tirada == 7)
             debePasar = false;
     }
     //si puede mover más de una
@@ -731,15 +732,13 @@ bool jugar(tJugadores jugadores, tColor jugTurnado, int& premio, bool& finJuego,
             cout << "Ficha a mover: ";
             cin >> ficha;
             cin.get();
-            if (ficha == 0) {
-                finJuego = true;
-            }
             ficha--;
-            if(fichasPosibles[ficha] == 1)
+            if (fichasPosibles[ficha] == 1) {
                 fichaElegidaCorrectamente = true;
+            }
             else
                 cout << "Ficha no disponible, elige de nuevo" << endl;
-        } while (!fichaElegidaCorrectamente || !finJuego);
+        } while (!fichaElegidaCorrectamente);
         int casillaFicha = jugadores[jugTurnado][ficha];
         if (puedeMover(jugadores, jugTurnado, ficha, casillaFicha, tirada, calle1, calle2)) {
             mover(jugadores, jugTurnado, ficha, casillaFicha, premio, ultimaFichaMovida, calle1, calle2);
@@ -747,7 +746,7 @@ bool jugar(tJugadores jugadores, tColor jugTurnado, int& premio, bool& finJuego,
             if (premio > 0)
                 debePasar = false;
         }
-        if (tirada >= 6)
+        if (tirada == 6 || tirada == 7)
             debePasar = false;
     }
     return debePasar;
