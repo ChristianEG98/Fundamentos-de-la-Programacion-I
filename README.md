@@ -1,2 +1,2 @@
-# FP
-Proyecto "Parchís" de la asignatura de Fundamentos de la Programación (Curso 2020/21)
+# Fundamentos de la Programación I
+Proyecto "Parchís" de la asignatura de Fundamentos de la Programación I(Curso 2020/21)
